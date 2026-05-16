@@ -1,16 +1,32 @@
 "use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Save } from "lucide-react";
+import { toast } from "sonner";
 import { supabase } from "@/app/lib/supabase";
 import { useCurrentRole } from "@/app/lib/use-current-role";
-import { toast } from "sonner";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { students } from "../data";
 
 export default function AddStudentPage() {
   const router = useRouter();
   const { currentRole, isLoaded } = useCurrentRole();
-  
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    studentId: "",
+    className: "",
+    gender: "",
+    age: "",
+    dateOfBirth: "",
+    guardianName: "",
+    guardianPhone: "",
+    address: "",
+    admissionDate: "",
+    status: "",
+    notes: "",
+  });
+
   useEffect(() => {
     if (!isLoaded) return;
 
@@ -31,21 +47,10 @@ export default function AddStudentPage() {
     return null;
   }
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    otherName: "",
-    gender: "",
-    dateOfBirth: "",
-    admissionNumber: "",
-    className: "",
-    status: "",
-    guardianName: "",
-    guardianPhone: "",
-  });
-
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     const { name, value } = e.target;
 
@@ -58,72 +63,26 @@ export default function AddStudentPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const fullName = [
-      formData.firstName,
-      formData.otherName,
-      formData.lastName,
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .trim();
-
-    if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.gender ||
-      !formData.dateOfBirth ||
-      !formData.admissionNumber ||
-      !formData.className ||
-      !formData.status ||
-      !formData.guardianName ||
-      !formData.guardianPhone
-    ) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
-
-    const storedStudents = JSON.parse(
-      localStorage.getItem("kingrich-students") || "null"
-    );
-
-    const studentSource =
-      storedStudents && storedStudents.length > 0 ? storedStudents : students;
-
-    const newStudent = {
-      id: Date.now().toString(),
-      fullName,
-      studentId: formData.admissionNumber,
-      className: formData.className,
-      gender: formData.gender,
-      age: 0,
-      guardianName: formData.guardianName,
-      guardianPhone: formData.guardianPhone,
-      status: formData.status as "Active" | "Pending" | "Inactive",
-      address: "",
-      dateOfBirth: formData.dateOfBirth,
-      admissionDate: new Date().toISOString().split("T")[0],
-      notes: "",
-    };
-
-    const updatedStudents = [...studentSource, newStudent];
-
-    localStorage.setItem("kingrich-students", JSON.stringify(updatedStudents));
-    const { data, error } = await supabase.from("students").insert([
+    const { error } = await supabase.from("students").insert([
       {
-        fullName: fullName,
-        studentId: formData.admissionNumber,
+        fullName: formData.fullName,
+        studentId: formData.studentId,
         className: formData.className,
         gender: formData.gender,
+        age: formData.age === "" ? null : Number(formData.age),
+        dateOfBirth: formData.dateOfBirth,
         guardianName: formData.guardianName,
-        status: "Active",
+        guardianPhone: formData.guardianPhone,
+        address: formData.address,
+        admissionDate: formData.admissionDate,
+        status: formData.status || "Active",
+        notes: formData.notes,
       },
     ]);
 
-    console.log("DATA:", data);
-    console.log("ERROR:", error);
-
     if (error) {
-      alert(error.message);
+      toast.error(error.message);
+      return;
     }
 
     toast.success("Student added successfully.");
@@ -132,11 +91,13 @@ export default function AddStudentPage() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl bg-blue-950 px-6 py-6 text-white shadow-sm">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="rounded-2xl bg-gradient-to-r from-blue-950 to-blue-800 p-6 text-white shadow-sm">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-medium text-blue-200">Add New Student</p>
-            <h1 className="text-3xl font-bold text-white">Add New Student</h1>
+            <p className="text-sm font-medium text-blue-200">
+              Add New Student
+            </p>
+            <h1 className="mt-1 text-3xl font-bold">Add New Student</h1>
             <p className="mt-2 text-sm text-white/90">
               Create a new student record for Kingrich Academy.
             </p>
@@ -144,7 +105,7 @@ export default function AddStudentPage() {
 
           <Link
             href="/dashboard/students"
-            className="inline-flex rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition hover:bg-slate-100"
+            className="rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-100"
           >
             Back to Students
           </Link>
@@ -155,94 +116,39 @@ export default function AddStudentPage() {
         onSubmit={handleSubmit}
         className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
       >
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2">
           <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              First Name
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Full Name
             </label>
             <input
               type="text"
-              name="firstName"
-              value={formData.firstName}
+              name="fullName"
+              value={formData.fullName}
               onChange={handleChange}
-              placeholder="Enter first name"
+              placeholder="Enter full name"
               className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500"
+              required
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              Last Name
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Student ID
             </label>
             <input
               type="text"
-              name="lastName"
-              value={formData.lastName}
+              name="studentId"
+              value={formData.studentId}
               onChange={handleChange}
-              placeholder="Enter last name"
+              placeholder="Enter student ID"
               className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500"
+              required
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              Other Name
-            </label>
-            <input
-              type="text"
-              name="otherName"
-              value={formData.otherName}
-              onChange={handleChange}
-              placeholder="Enter other name"
-              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              Gender
-            </label>
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500"
-            >
-              <option value="">Select gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              Date of Birth
-            </label>
-            <input
-              type="date"
-              name="dateOfBirth"
-              value={formData.dateOfBirth}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              Admission Number
-            </label>
-            <input
-              type="text"
-              name="admissionNumber"
-              value={formData.admissionNumber}
-              onChange={handleChange}
-              placeholder="Enter admission number"
-              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
               Class
             </label>
             <select
@@ -250,6 +156,7 @@ export default function AddStudentPage() {
               value={formData.className}
               onChange={handleChange}
               className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500"
+              required
             >
               <option value="">Select class</option>
               <option value="Crèche">Crèche</option>
@@ -270,7 +177,107 @@ export default function AddStudentPage() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Gender
+            </label>
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500"
+              required
+            >
+              <option value="">Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Age
+            </label>
+            <input
+              type="number"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              placeholder="Enter age"
+              min="0"
+              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              name="dateOfBirth"
+              value={formData.dateOfBirth}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Guardian Name
+            </label>
+            <input
+              type="text"
+              name="guardianName"
+              value={formData.guardianName}
+              onChange={handleChange}
+              placeholder="Enter guardian name"
+              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Guardian Phone
+            </label>
+            <input
+              type="text"
+              name="guardianPhone"
+              value={formData.guardianPhone}
+              onChange={handleChange}
+              placeholder="Enter guardian phone"
+              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500"
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Address
+            </label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="Enter student address"
+              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Admission Date
+            </label>
+            <input
+              type="date"
+              name="admissionDate"
+              value={formData.admissionDate}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
               Status
             </label>
             <select
@@ -286,46 +293,39 @@ export default function AddStudentPage() {
             </select>
           </div>
 
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              Guardian Name
+          <div className="md:col-span-2">
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Notes
             </label>
-            <input
-              type="text"
-              name="guardianName"
-              value={formData.guardianName}
+            <textarea
+              name="notes"
+              value={formData.notes}
               onChange={handleChange}
-              placeholder="Enter guardian name"
-              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-800">
-              Guardian Phone
-            </label>
-            <input
-              type="text"
-              name="guardianPhone"
-              value={formData.guardianPhone}
-              onChange={handleChange}
-              placeholder="Enter guardian phone"
+              placeholder="Additional notes about this student..."
+              rows={4}
               className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500"
             />
           </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row">
           <button
             type="submit"
-            className="rounded-xl bg-blue-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800"
+            style={{
+              backgroundColor: "#1e40af",
+              color: "white",
+              border: "none",
+              opacity: 1,
+            }}
+            className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold shadow-sm transition hover:brightness-90"
           >
+            <Save className="h-4 w-4" style={{ color: "white" }} />
             Save Student
           </button>
 
           <Link
             href="/dashboard/students"
-            className="inline-flex items-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+            className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
           >
             Cancel
           </Link>
