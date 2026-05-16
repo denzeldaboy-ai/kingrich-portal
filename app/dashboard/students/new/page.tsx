@@ -8,6 +8,9 @@ import { toast } from "sonner";
 import { supabase } from "@/app/lib/supabase";
 import { useCurrentRole } from "@/app/lib/use-current-role";
 
+
+
+
 export default function AddStudentPage() {
   const router = useRouter();
   const { currentRole, isLoaded } = useCurrentRole();
