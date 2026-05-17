@@ -55,19 +55,19 @@ export default function HomePage() {
             students.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/sign-in"
-              className="rounded-2xl bg-[#0B3A6E] px-6 py-3 font-semibold text-white hover:bg-[#082c53]"
+              className="inline-flex items-center justify-center rounded-xl bg-blue-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-900"
             >
               Sign In
             </Link>
 
             <Link
               href="/dashboard"
-              className="rounded-2xl border border-slate-300 px-6 py-3 font-semibold text-slate-800 hover:bg-slate-50"
+              className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-50"
             >
-              Preview Dashboard
+              Open Portal
             </Link>
           </div>
 
