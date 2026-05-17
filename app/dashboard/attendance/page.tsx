@@ -365,11 +365,30 @@ export default function AttendancePage() {
 
               {filteredAttendance.length === 0 && (
                 <tr>
-                  <td
-                    colSpan={8}
-                    className="px-6 py-12 text-center text-sm text-slate-500"
-                  >
-                    No attendance records match your search or filters.
+                  <td colSpan={8} className="px-6 py-14 text-center">
+                    <div className="mx-auto flex max-w-sm flex-col items-center">
+                      <div className="mb-4 rounded-full bg-slate-100 p-4 text-slate-500">
+                        <CalendarCheck2 className="h-7 w-7" />
+                      </div>
+
+                      <h3 className="text-base font-bold text-slate-900">
+                        No attendance records found
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-6 text-slate-500">
+                        No attendance records match your current search or filters. Try
+                        changing your filters or mark attendance for a class.
+                      </p>
+
+                      {canManageAttendance && (
+                        <Link
+                          href="/dashboard/attendance/new"
+                          className="mt-5 inline-flex items-center rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800"
+                        >
+                          + Mark Attendance
+                        </Link>
+                      )}
+                    </div>
                   </td>
                 </tr>
               )}
