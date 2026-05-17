@@ -373,11 +373,30 @@ export default function StudentsPage() {
 
               {filteredStudents.length === 0 && (
                 <tr>
-                  <td
-                    colSpan={7}
-                    className="px-6 py-12 text-center text-sm text-slate-500"
-                  >
-                    No students match your search or filters.
+                  <td colSpan={7} className="px-6 py-14 text-center">
+                    <div className="mx-auto flex max-w-sm flex-col items-center">
+                      <div className="mb-4 rounded-full bg-slate-100 p-4 text-slate-500">
+                        <Users className="h-7 w-7" />
+                      </div>
+
+                      <h3 className="text-base font-bold text-slate-900">
+                        No students found
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-6 text-slate-500">
+                        No student records match your current search or filters. Try changing
+                        your filters or add a new student.
+                      </p>
+
+                      {canManageStudents && (
+                        <Link
+                          href="/dashboard/students/new"
+                          className="mt-5 inline-flex items-center rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800"
+                        >
+                          + Add Student
+                        </Link>
+                      )}
+                    </div>
                   </td>
                 </tr>
               )}
