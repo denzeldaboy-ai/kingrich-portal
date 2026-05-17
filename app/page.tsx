@@ -99,41 +99,75 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-7xl px-6 py-12">
-          <h3 className="text-2xl font-bold">Portal Features Coming Next</h3>
-          <p className="mt-2 text-slate-600">
-            We are building the system step by step for Kingrich Academy.
+     <section className="mx-auto max-w-7xl px-6 py-12">
+        <div className="mb-6">
+          <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
+            Portal Features
           </p>
+          <h2 className="mt-2 text-2xl font-bold text-slate-900">
+            Built for Daily School Management
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+            Kingrich Academy Portal helps manage key school operations from one
+            secure dashboard.
+          </p>
+        </div>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <h4 className="font-semibold">Student Management</h4>
-              <p className="mt-2 text-sm text-slate-600">
-                Student profiles, class assignments, and guardian records.
-              </p>
-            </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="font-bold text-slate-900">Students</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Register, view, edit, and manage student records.
+            </p>
+          </div>
 
-            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <h4 className="font-semibold">Attendance</h4>
-              <p className="mt-2 text-sm text-slate-600">
-                Daily class attendance and absence tracking.
-              </p>
-            </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="font-bold text-slate-900">Teachers</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Keep teacher profiles and staff information organized.
+            </p>
+          </div>
 
-            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <h4 className="font-semibold">Fees</h4>
-              <p className="mt-2 text-sm text-slate-600">
-                Billing, payment records, and balances.
-              </p>
-            </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="font-bold text-slate-900">Classes</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Create classes and manage class-level information.
+            </p>
+          </div>
 
-            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <h4 className="font-semibold">Results & Reports</h4>
-              <p className="mt-2 text-sm text-slate-600">
-                Scores, report cards, and academic performance tracking.
-              </p>
-            </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="font-bold text-slate-900">Attendance</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Record daily class attendance and monitor presence.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="font-bold text-slate-900">Results</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Save student scores, grades, terms, and remarks.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="font-bold text-slate-900">Fees</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Track payments, balances, and fee status.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="font-bold text-slate-900">Announcements</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Publish notices for students, parents, teachers, and staff.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="font-bold text-slate-900">Role Access</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Admin, teacher, and clerk dashboards with controlled access.
+            </p>
           </div>
         </div>
       </section>
