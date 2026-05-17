@@ -91,9 +91,11 @@ export default function HomePage() {
         </div>
 
         <div>
-          <div className="flex min-h-[320px] items-center justify-center rounded-[28px] border border-slate-200 bg-slate-100 text-slate-500 shadow-xl">
-            Student image coming soon
-          </div>
+          <img
+            src="/school-hero.jpg"
+            alt="Kingrich Academy students"
+            className="h-full w-full rounded-3xl object-cover"
+          />
         </div>
       </section>
 
