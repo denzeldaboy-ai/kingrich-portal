@@ -384,6 +384,10 @@ export default function DashboardPage() {
                 <h3 className="mt-2 text-3xl font-bold text-slate-900">
                   {item.value}
                 </h3>
+
+                <p className="mt-1 text-xs text-slate-400">
+                  Live Supabase data
+                </p>
               </div>
               <div className={`rounded-xl p-3 ${item.iconWrap}`}>
                 {item.icon}
