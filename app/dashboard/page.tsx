@@ -94,8 +94,15 @@ export default function DashboardPage() {
 
   if (!isLoaded) {
     return (
-      <div className="flex min-h-[300px] items-center justify-center text-slate-600">
-        Loading dashboard...
+      <div className="flex min-h-[300px] items-center justify-center">
+        <div className="rounded-2xl border border-slate-200 bg-white px-6 py-4 text-center shadow-sm">
+          <p className="text-sm font-semibold text-slate-900">
+            Loading Kingrich Portal...
+          </p>
+          <p className="mt-1 text-xs text-slate-500">
+            Please wait while we prepare your dashboard.
+          </p>
+        </div>
       </div>
     );
   }
