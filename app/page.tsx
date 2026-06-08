@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
       {/* Top Navigation */}
-      <section className="bg-white">
+      <section className="bg-blue-900 text-white shadow-sm">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
             <Image
@@ -18,36 +18,36 @@ export default function HomePage() {
               alt="Kingrich Academy Logo"
               width={52}
               height={52}
-              className="rounded-full object-contain"
+              className="rounded-full bg-white object-contain p-1"
               priority
             />
 
             <div>
-              <h1 className="text-lg font-bold text-slate-900">
+              <h1 className="text-lg font-bold text-white">
                 Kingrich Academy Portal
               </h1>
-              <p className="text-sm font-medium text-blue-900">
+              <p className="text-sm font-medium text-blue-100">
                 Aspire to Inspire
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            {isSignedIn ? (
-              <Link
-                href="/dashboard"
-                className="rounded-xl bg-[#d4a017] px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-[#c29313]"
-              >
-                Open Portal
-              </Link>
-            ) : (
+            {!isSignedIn && (
               <Link
                 href="/sign-in"
-                className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                className="rounded-xl border border-white/40 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
               >
                 Sign In
               </Link>
             )}
+
+            <Link
+              href="/dashboard"
+              className="rounded-xl bg-[#d4a017] px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-[#c29313]"
+            >
+              Open Portal
+            </Link>
           </div>
         </div>
       </section>
@@ -72,14 +72,7 @@ export default function HomePage() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            {isSignedIn ? (
-              <Link
-                href="/dashboard"
-                className="rounded-xl bg-[#d4a017] px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-[#c29313]"
-              >
-                Open Portal
-              </Link>
-            ) : (
+            {!isSignedIn && (
               <Link
                 href="/sign-in"
                 className="rounded-xl bg-blue-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
@@ -87,17 +80,42 @@ export default function HomePage() {
                 Sign In
               </Link>
             )}
+
+            <Link
+              href="/dashboard"
+              className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+            >
+              Open Portal
+            </Link>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p className="text-sm font-semibold text-slate-900">Location</p>
+              <p className="mt-2 text-sm leading-6 text-slate-500">
+                Mensa Bar, Sasabi, Near Dodowa, Accra, Ghana
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p className="text-sm font-semibold text-slate-900">Contact</p>
+              <p className="mt-2 text-sm leading-6 text-slate-500">
+                +233 593 345 496
+                <br />
+                info@kingrichfoundation.org
+              </p>
+            </div>
           </div>
         </div>
 
         <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
           <div className="overflow-hidden rounded-2xl bg-slate-100">
             <Image
-              src="/logo.png"
-              alt="Kingrich Academy"
+              src="/students.jpg"
+              alt="Kingrich Academy Students"
               width={900}
               height={650}
-              className="h-[360px] w-full object-contain p-8"
+              className="h-[360px] w-full object-cover"
               priority
             />
           </div>
@@ -117,9 +135,9 @@ export default function HomePage() {
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-slate-500">
-              Manage the key parts of school operations from one secure portal:
-              students, teachers, classes, attendance, results, fees,
-              announcements, and role-based access.
+              Kingrich Academy Portal helps manage key school operations from
+              one secure dashboard: students, teachers, classes, attendance,
+              results, fees, announcements, and role-based access.
             </p>
           </div>
 
