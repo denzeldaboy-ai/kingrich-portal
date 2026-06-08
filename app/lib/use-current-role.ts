@@ -10,14 +10,23 @@ export function useCurrentRole(): {
 } {
   const { user, isLoaded, isSignedIn } = useUser();
 
+  const email = user?.primaryEmailAddress?.emailAddress?.toLowerCase();
   const roleFromMetadata = user?.publicMetadata?.role;
 
-  const currentRole: UserRole =
+  // Put YOUR Clerk login email here
+  const ownerEmail = "kingrichacademy@gmail.com".toLowerCase();
+
+  let currentRole: UserRole = "clerk";
+
+  if (
     roleFromMetadata === "admin" ||
     roleFromMetadata === "teacher" ||
     roleFromMetadata === "clerk"
-      ? roleFromMetadata
-      : "admin";
+  ) {
+    currentRole = roleFromMetadata;
+  } else if (email === ownerEmail) {
+    currentRole = "admin";
+  }
 
   return {
     currentRole,
