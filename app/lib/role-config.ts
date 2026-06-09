@@ -12,6 +12,7 @@ export const roleAccess = {
     "/dashboard/announcements",
     "/dashboard/roles",
     "/dashboard/settings",
+    "/dashboard/users",
   ],
   teacher: [
     "/dashboard",
