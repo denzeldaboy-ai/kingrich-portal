@@ -49,9 +49,7 @@ export async function POST(request: Request) {
     }
 
     const appUrl =
-      process.env.NEXT_PUBLIC_APP_URL ||
-      process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL ||
-      "http://localhost:3000";
+      process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
     const invitation = await client.invitations.createInvitation({
       emailAddress: email,
@@ -60,6 +58,7 @@ export async function POST(request: Request) {
         role,
         fullName,
       },
+      ignoreExisting: true,
     });
 
     return NextResponse.json({
@@ -67,11 +66,17 @@ export async function POST(request: Request) {
       message: "Invitation sent successfully.",
       invitationId: invitation.id,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Invite user error:", error);
 
+    const clerkMessage =
+      error?.errors?.[0]?.longMessage ||
+      error?.errors?.[0]?.message ||
+      error?.message ||
+      "Something went wrong while sending the invitation.";
+
     return NextResponse.json(
-      { error: "Something went wrong while sending the invitation." },
+      { error: clerkMessage },
       { status: 500 }
     );
   }
