@@ -28,6 +28,7 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
+    
     const email = String(body.email || "").trim().toLowerCase();
     const role = String(body.role || "").trim() as UserRole;
     const fullName = String(body.fullName || "").trim();
