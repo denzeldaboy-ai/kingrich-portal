@@ -137,8 +137,7 @@ export default function UsersPage() {
                 value={fullName}
                 onChange={(event) => setFullName(event.target.value)}
                 placeholder="Example: Ama Mensah"
-                className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-              />
+                className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"              />
             </div>
 
             <div>
@@ -151,7 +150,7 @@ export default function UsersPage() {
                 type="email"
                 required
                 placeholder="example@email.com"
-                className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
               />
             </div>
 
@@ -162,7 +161,7 @@ export default function UsersPage() {
               <select
                 value={role}
                 onChange={(event) => setRole(event.target.value as UserRole)}
-                className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
               >
                 <option value="teacher">Teacher</option>
                 <option value="clerk">Clerk</option>
