@@ -1,7 +1,7 @@
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-type UserRole = "admin" | "teacher" | "clerk";
+type UserRole = "teacher" | "clerk";
 
 export async function POST(request: Request) {
   try {
@@ -28,13 +28,12 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
-    
+
     const email = String(body.email || "").trim().toLowerCase();
     const role = String(body.role || "").trim() as UserRole;
     const fullName = String(body.fullName || "").trim();
 
-    const allowedRoles: UserRole[] = ["admin", "teacher", "clerk"];
-
+    const allowedRoles: UserRole[] = ["teacher", "clerk"];
     if (!email) {
       return NextResponse.json(
         { error: "Email address is required." },
