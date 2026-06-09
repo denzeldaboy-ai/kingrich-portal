@@ -41,6 +41,7 @@ export const sidebarByRole = {
     { href: "/dashboard/fees", label: "Fees" },
     { href: "/dashboard/announcements", label: "Announcements" },
     { href: "/dashboard/roles", label: "Roles" },
+    { href: "/dashboard/users", label: "Users" },
     { href: "/dashboard/settings", label: "Settings" },
   ],
   teacher: [
