@@ -5,7 +5,7 @@ import { MailPlus, ShieldCheck, UserPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCurrentRole } from "@/app/lib/use-current-role";
 
-type UserRole = "admin" | "teacher" | "clerk";
+type UserRole = "teacher" | "clerk";
 
 export default function UsersPage() {
   const router = useRouter();
@@ -165,7 +165,6 @@ export default function UsersPage() {
               >
                 <option value="teacher">Teacher</option>
                 <option value="clerk">Clerk</option>
-                <option value="admin">Admin</option>
               </select>
             </div>
 
